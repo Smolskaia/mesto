@@ -1,0 +1,6 @@
+.elements {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 51px auto 0;
+}
