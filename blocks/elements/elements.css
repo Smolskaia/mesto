@@ -4,3 +4,9 @@
   align-items: center;
   margin: 51px auto 0;
 }
+
+@media screen and (max-width: 680px) {
+  .elements {
+    margin: 36px auto 0;
+  }
+}
