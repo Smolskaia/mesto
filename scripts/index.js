@@ -16,7 +16,7 @@ let profileInfo = document.querySelector('.profile__about');
 
 // функция открытия попапа
 function openEditPopup() {
-  //вставляем новые значения в поля с помощью textContent
+  //вставляем значения со страницы в поля с помощью textContent
   InputName.value = profileName.textContent;
   InputInfo.value = profileInfo.textContent;
   popup.classList.add('popup_opened');
@@ -36,7 +36,7 @@ function handleFormSubmit (evt) {
   let nameFormValue = InputName.value;
   let infoFormValue = InputInfo.value;
     
-  // Вставьте новые значения с помощью textContent
+  // Вставьте новые значения на страцицу из формы с помощью textContent
   profileName.textContent = nameFormValue;
   profileInfo.textContent = infoFormValue;
 
