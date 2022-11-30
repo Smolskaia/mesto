@@ -18,3 +18,9 @@
     text-align: center;
   }
 }
+
+@media screen and (max-width: 400px) {
+  .profile__about {
+    width: 75%;
+  }
+}

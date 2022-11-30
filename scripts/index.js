@@ -2,14 +2,14 @@
 // console.log('Hello');
 
 // Находим форму в DOM
-let popupContainer = document.querySelector('.popup__container');
+const popupForm = document.querySelector('.popup__input');
 // Находим поля формы в DOM
-let InputName = popupContainer.querySelector('.popup__input-text_name');
-let InputInfo = popupContainer.querySelector('.popup__input-text_info'); 
+const inputName = popupForm.querySelector('.popup__input-text_name');
+const inputInfo = popupForm.querySelector('.popup__input-text_info'); 
 // Открытие/закрытие попап
-let editButton = document.querySelector('.profile__btn-edit');
-let popup = document.querySelector('.popup');
-let popupClose = document.querySelector('.popup__btn-close');
+const buttonEdit = document.querySelector('.profile__btn-edit');
+const popup = document.querySelector('.popup');
+const popupClose = document.querySelector('.popup__btn-close');
 // Выберите элементы, куда должны быть вставлены значения полей
 let profileName = document.querySelector('.profile__name');
 let profileInfo = document.querySelector('.profile__about');
@@ -17,8 +17,8 @@ let profileInfo = document.querySelector('.profile__about');
 // функция открытия попапа
 function openEditPopup() {
   //вставляем значения со страницы в поля с помощью textContent
-  InputName.value = profileName.textContent;
-  InputInfo.value = profileInfo.textContent;
+  inputName.value = profileName.textContent;
+  inputInfo.value = profileInfo.textContent;
   popup.classList.add('popup_opened');
 }
 
@@ -33,21 +33,18 @@ function handleFormSubmit (evt) {
                         // Так мы можем определить свою логику отправки.
                         // О том, как это делать, расскажем позже.
     // Получите значение полей jobInput и nameInput из свойства value
-  let nameFormValue = InputName.value;
-  let infoFormValue = InputInfo.value;
-    
-  // Вставьте новые значения на страцицу из формы с помощью textContent
-  profileName.textContent = nameFormValue;
-  profileInfo.textContent = infoFormValue;
+    // Вставьте новые значения на страцицу из формы с помощью textContent    
+  profileName.textContent = inputName.value;;
+  profileInfo.textContent = inputInfo.value;
 
   closeEditPopup();
 }
 
 // вешаем обработчик на клик по кнопке, в скобках (событие, функция)
-editButton.addEventListener('click', openEditPopup) 
+buttonEdit.addEventListener('click', openEditPopup) 
 popupClose.addEventListener('click', closeEditPopup)
 
 
 // Прикрепляем обработчик к форме:
 // он будет следить за событием “submit” - «отправка»
-popupContainer.addEventListener('submit', handleFormSubmit);
+popupForm.addEventListener('submit', handleFormSubmit);

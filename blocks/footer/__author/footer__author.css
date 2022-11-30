@@ -7,6 +7,13 @@
   margin: 0;
 }
 
+@media screen and (max-width: 910px) {
+  .footer__author {
+    margin-left: 19px;
+  }
+}
+
+
 @media screen and (max-width: 680px) {
   .footer__author {
     font-size: 14px;
