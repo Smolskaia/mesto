@@ -1,7 +1,10 @@
 .element__like {
-  position: absolute;
-  right: 20px;
-  bottom: 33px;
+  position: relative;
+  bottom: 30px;
+  padding: 0;
+  margin-right: 25px;
+  margin-top: -30px;
+  align-self: end;
   width: 22px;
   height: 19px;
   background-image: url(../../../images/element-like.png);
