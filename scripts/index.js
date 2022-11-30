@@ -2,10 +2,10 @@
 // console.log('Hello');
 
 // Находим форму в DOM
-const popupForm = document.querySelector('.popup__input');
+const popupForm = document.querySelector('.popup__form');
 // Находим поля формы в DOM
-const inputName = popupForm.querySelector('.popup__input-text_name');
-const inputInfo = popupForm.querySelector('.popup__input-text_info'); 
+const inputName = popupForm.querySelector('.popup__input_text_name');
+const inputInfo = popupForm.querySelector('.popup__input_text_info'); 
 // Открытие/закрытие попап
 const buttonEdit = document.querySelector('.profile__btn-edit');
 const popup = document.querySelector('.popup');
