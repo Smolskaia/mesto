@@ -1,6 +1,51 @@
 // проверяем, что скрипт подключел верно, в консоли отображаются все перечисленные элементы
 // console.log('Hello');
 
+// Добавление массива карточек на страницу
+// Находим форму в DOM, куда вставляем массив
+const cardsList = document.querySelector('.elements__list');
+// // создаём элемент списка. Чтобы получить содержимое template, нужно обратиться к его свойству content
+const cardsTemplate = document.querySelector('#card-template').content;
+
+// массив с карточками
+let initialCards = [
+  {
+    name: 'Архыз',
+    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg'
+  },
+  {
+    name: 'Челябинская область',
+    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/chelyabinsk-oblast.jpg'
+  },
+  {
+    name: 'Иваново',
+    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg'
+  },
+  {
+    name: 'Камчатка',
+    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg'
+  },
+  {
+    name: 'Холмогорский район',
+    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg'
+  },
+  {
+    name: 'Байкал',
+    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg'
+  }
+];
+
+initialCards.forEach(function (element) {
+  //кланируем содержимое тега template
+  const cardElement = cardsTemplate.querySelector('.element').cloneNode(true);
+  // наполняем содержимым
+  cardElement.querySelector('.element__title').textContent = element.name;
+  cardElement.querySelector('.element__img').src = element.link;
+  //отображаем на странице
+  cardsList.append(cardElement);
+
+})
+
 // Находим форму в DOM
 const popupForm = document.querySelector('.popup__form');
 // Находим поля формы в DOM

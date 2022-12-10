@@ -3,4 +3,5 @@
   object-fit: cover;
   background-size: cover;
   display: block;
+  aspect-ratio: 1 / 1;
 }
