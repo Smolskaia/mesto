@@ -63,6 +63,27 @@ function loadInitialCards(elements) {
 
 loadInitialCards(initialCards);
 
+// попап для добавления фото
+const popupAddCard = document.querySelector('.popup_form_add');
+const formAddCard = popupAddCard.querySelector('.popup__form');
+const descriptionAddCard = popupAddCard.querySelector('.popup__input_text_name');
+const linkAddCard = popupAddCard.querySelector('.popup__input_text_info');
+
+
+function handleFormSubmitAddCard (evt) {
+  evt.preventDefault();
+  const name = descriptionAddCard.value;
+  const link = linkAddCard.value;
+ 
+  createCard(name, link);
+  closePopup(popupAddCard);
+}
+
+// Прикрепляем обработчик к форме:
+// он будет следить за событием “submit” - «отправка»
+formAddCard.addEventListener('submit', handleFormSubmitAddCard);
+
+
 // функция удаления карточки
 function deleteCard(element) {
   element.closest('.element').remove();
@@ -89,20 +110,6 @@ function openViewerImgPopup (image, title) {
 }
 //_______________________________________________
 
-// попап для добавления фото
-const popupAddCard = document.querySelector('.popup_form_add');
-const formAddCard = popupAddCard.querySelector('.popup__form');
-const descriptionAddCard = popupAddCard.querySelector('.popup__input_text_name');
-const linkAddCard = popupAddCard.querySelector('.popup__input_text_info');
-
-function handleFormSubmitAddCard (evt) {
-  evt.preventDefault();
-  const name = descriptionAddCard.value;
-  const link = linkAddCard.value;
-
-  createCard(name, link);
-  closePopup(popupAddCard);
-}
 
 
 
