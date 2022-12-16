@@ -44,7 +44,6 @@ buttonAdd.addEventListener('click', () => {
 })
  
 
-
 // Добавление массива карточек на страницу
 
 // массив с карточками
@@ -99,7 +98,7 @@ function createCard(name, link) {
   const cardImage = cardElement.querySelector('.element__img');
   
   cardElement.querySelector('.element__img').src = link;
-  cardElement.querySelector('.element__img').alt = `${name}.`;
+  cardElement.querySelector('.element__img').alt = `${name}`;
   cardElement.querySelector('.element__title').textContent = name;
   
 
