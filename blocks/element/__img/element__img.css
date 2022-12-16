@@ -4,4 +4,9 @@
   background-size: cover;
   display: block;
   aspect-ratio: 1 / 1;
+  background-color: black;
+}
+
+.element__img:hover {
+  cursor: pointer;
 }
