@@ -1,12 +1,12 @@
 
-const popupForm = document.querySelector('.popup__form');
-const inputName = popupForm.querySelector('.popup__input_text_name');
-const inputInfo = popupForm.querySelector('.popup__input_text_info'); 
+const /*popupEditForm*/popupEditProfile = document.querySelector('.popup_form_edit');
+const /*popupForm*/popupEditForm = popupEditProfile.querySelector('.popup__form');
+const inputName = popupEditForm.querySelector('.popup__input_text_name');
+const inputInfo = popupEditForm.querySelector('.popup__input_text_info'); 
 // const popup = document.querySelector('.popup');
-const popupEditForm = document.querySelector('.popup_form_edit');
-const popupEditClose = popupEditForm.querySelector('.popup__btn-close');
-let profileName = document.querySelector('.profile__name');
-let profileInfo = document.querySelector('.profile__about');
+const popupEditClose = popupEditProfile.querySelector('.popup__btn-close');
+const profileName = document.querySelector('.profile__name');
+const profileInfo = document.querySelector('.profile__about');
 
 // попап для добавления фото
 const popupAddCard = document.querySelector('.popup_form_add');
@@ -36,7 +36,7 @@ function openPopup (popup) {
 buttonEdit.addEventListener('click', () => {
   inputName.value = profileName.textContent;
   inputInfo.value = profileInfo.textContent;
-  openPopup(popupEditForm);
+  openPopup(popupEditProfile);
 })
 
 buttonAdd.addEventListener('click', () => {
@@ -47,7 +47,7 @@ buttonAdd.addEventListener('click', () => {
 // Добавление массива карточек на страницу
 
 // массив с карточками
-// let initialCards = [
+// const initialCards = [
 //   {
 //     name: 'Архыз',
 //     link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg'
@@ -80,11 +80,11 @@ const cardsList = document.querySelector('.elements__list');
 const cardsTemplate = document.querySelector('#card-template').content;
 
 
-// //Получить текущие данные картинку и название карточки для попапа
-function getPopupViewerDatas(evt) {
-  popupViewerImage.src = evt.target.src;
-  popupViewerImage.alt = evt.target.alt;
-  popupViewerDescription.textContent = evt.target.alt;
+//Заполнить данные: картинку и название карточки для попапа
+function fillPopupViewerData(name, link) {
+  popupViewerImage.src = link;
+  popupViewerImage.alt = name;
+  popupViewerDescription.textContent = name;
 }
 
 
@@ -97,8 +97,8 @@ function createCard(name, link) {
   const cardDelete = cardElement.querySelector('.element__delete');
   const cardImage = cardElement.querySelector('.element__img');
   
-  cardElement.querySelector('.element__img').src = link;
-  cardElement.querySelector('.element__img').alt = `${name}`;
+  cardImage.src = link;
+  cardImage.alt = name;
   cardElement.querySelector('.element__title').textContent = name;
   
 
@@ -106,8 +106,8 @@ function createCard(name, link) {
   cardDelete.addEventListener('click', () => deleteCard(cardDelete));
   cardImage.addEventListener('click', (evt) => {
     openPopup(popupViewer);
-    getPopupViewerDatas(evt);
-    });
+    fillPopupViewerData(name, link);
+});
 
   cardsList.prepend(cardElement);
 }
@@ -150,19 +150,20 @@ function handleFormSubmitAddCard (evt) {
   const link = linkAddCard.value;
  
   createCard(name, link);
+  formAddCard.reset();
   closePopup(popupAddCard);
 }
 
 // Обработчик формы Редактирования профиля
-function handleFormSubmit (evt) {
+function handleFormSubmitEditCard (evt) {
   evt.preventDefault();  
   profileName.textContent = inputName.value;;
   profileInfo.textContent = inputInfo.value;
 
-  closePopup(popupEditForm);
+  closePopup(popupEditProfile);
 }
 
 // Прикрепляем обработчик к форме:
 // он будет следить за событием “submit” - «отправка»
-popupForm.addEventListener('submit', handleFormSubmit);
+popupEditForm.addEventListener('submit', handleFormSubmitEditCard);
 formAddCard.addEventListener('submit', handleFormSubmitAddCard);
