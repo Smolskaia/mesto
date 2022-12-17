@@ -74,10 +74,7 @@ buttonAdd.addEventListener('click', () => {
 //   }
 // ];
 
-// Находим контейнер в DOM, куда вставляем массив
-const cardsList = document.querySelector('.elements__list');
-// создаём элемент списка. Чтобы получить содержимое template, обращаемся к его свойству content
-const cardsTemplate = document.querySelector('#card-template').content;
+
 
 
 //Заполнить данные: картинку и название карточки для попапа
@@ -89,6 +86,34 @@ function fillPopupViewerData(name, link) {
 
 
 // функция для создания новой карточки
+// function createCard(name, link) {  
+//   //кланируем содержимое тега template
+//   const cardElement = cardsTemplate.querySelector('.element').cloneNode(true);
+//   // наполняем содержимым
+//   const cardLike = cardElement.querySelector('.element__like');
+//   const cardDelete = cardElement.querySelector('.element__delete');
+//   const cardImage = cardElement.querySelector('.element__img');
+  
+//   cardImage.src = link;
+//   cardImage.alt = name;
+//   cardElement.querySelector('.element__title').textContent = name;
+  
+
+//   cardLike.addEventListener('click', () => likeCard(cardLike));
+//   cardDelete.addEventListener('click', () => deleteCard(cardDelete));
+//   cardImage.addEventListener('click', () => {
+//     openPopup(popupViewer);
+//     fillPopupViewerData(name, link);
+// });
+
+//   cardsList.prepend(cardElement);
+// }
+
+// Находим контейнер в DOM, куда вставляем массив
+const cardsList = document.querySelector('.elements__list');
+// создаём элемент списка. Чтобы получить содержимое template, обращаемся к его свойству content
+const cardsTemplate = document.querySelector('#card-template').content;
+
 function createCard(name, link) {  
   //кланируем содержимое тега template
   const cardElement = cardsTemplate.querySelector('.element').cloneNode(true);
@@ -104,24 +129,28 @@ function createCard(name, link) {
 
   cardLike.addEventListener('click', () => likeCard(cardLike));
   cardDelete.addEventListener('click', () => deleteCard(cardDelete));
-  cardImage.addEventListener('click', (evt) => {
+  cardImage.addEventListener('click', () => {
     openPopup(popupViewer);
     fillPopupViewerData(name, link);
-});
+  });
 
-  cardsList.prepend(cardElement);
+  return cardElement;
+}
+
+function addCard(name, link) {
+  cardsList.prepend(createCard(name, link));
 }
 
 // фукция добавления исходного массива карточек на страницу
 function loadInitialCards(elements) {
   elements.reverse().forEach(({name, link}) => {
-    createCard(name, link);
+    console.log(name, link);
+    addCard(name, link);
   })
 }
 
 loadInitialCards(initialCards);
 
-// функция удаляет карточки
 function deleteCard(element) {
   element.closest('.element').remove();
 }
