@@ -1,6 +1,6 @@
 
-const /*popupEditForm*/popupEditProfile = document.querySelector('.popup_form_edit');
-const /*popupForm*/popupEditForm = popupEditProfile.querySelector('.popup__form');
+const popupEditProfile = document.querySelector('.popup_form_edit');
+const popupEditForm = popupEditProfile.querySelector('.popup__form');
 const inputName = popupEditForm.querySelector('.popup__input_text_name');
 const inputInfo = popupEditForm.querySelector('.popup__input_text_info'); 
 // const popup = document.querySelector('.popup');
@@ -43,71 +43,12 @@ buttonAdd.addEventListener('click', () => {
   openPopup(popupAddCard);
 })
  
-
-// Добавление массива карточек на страницу
-
-// массив с карточками
-// const initialCards = [
-//   {
-//     name: 'Архыз',
-//     link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg'
-//   },
-//   {
-//     name: 'Челябинская область',
-//     link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/chelyabinsk-oblast.jpg'
-//   },
-//   {
-//     name: 'Иваново',
-//     link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg'
-//   },
-//   {
-//     name: 'Камчатка',
-//     link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg'
-//   },
-//   {
-//     name: 'Холмогорский район',
-//     link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg'
-//   },
-//   {
-//     name: 'Байкал',
-//     link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg'
-//   }
-// ];
-
-
-
-
 //Заполнить данные: картинку и название карточки для попапа
 function fillPopupViewerData(name, link) {
   popupViewerImage.src = link;
   popupViewerImage.alt = name;
   popupViewerDescription.textContent = name;
 }
-
-
-// функция для создания новой карточки
-// function createCard(name, link) {  
-//   //кланируем содержимое тега template
-//   const cardElement = cardsTemplate.querySelector('.element').cloneNode(true);
-//   // наполняем содержимым
-//   const cardLike = cardElement.querySelector('.element__like');
-//   const cardDelete = cardElement.querySelector('.element__delete');
-//   const cardImage = cardElement.querySelector('.element__img');
-  
-//   cardImage.src = link;
-//   cardImage.alt = name;
-//   cardElement.querySelector('.element__title').textContent = name;
-  
-
-//   cardLike.addEventListener('click', () => likeCard(cardLike));
-//   cardDelete.addEventListener('click', () => deleteCard(cardDelete));
-//   cardImage.addEventListener('click', () => {
-//     openPopup(popupViewer);
-//     fillPopupViewerData(name, link);
-// });
-
-//   cardsList.prepend(cardElement);
-// }
 
 // Находим контейнер в DOM, куда вставляем массив
 const cardsList = document.querySelector('.elements__list');
@@ -169,7 +110,7 @@ popupCloseButtons.forEach(button => {
   button.addEventListener('click', () => {
     const popupParent = button.closest('.popup')
     closePopup(popupParent)
-  } )
+  })
 })
 
 //Обработчик формы Добавления карточки
@@ -178,7 +119,7 @@ function handleFormSubmitAddCard (evt) {
   const name = descriptionAddCard.value;
   const link = linkAddCard.value;
  
-  createCard(name, link);
+  addCard(name, link);
   formAddCard.reset();
   closePopup(popupAddCard);
 }
