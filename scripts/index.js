@@ -27,6 +27,8 @@ const buttonAdd = document.querySelector('.profile__btn-add');
 const buttonEdit = document.querySelector('.profile__btn-edit');
 const popupOpenImg = document.querySelectorAll('.element__img');
 
+const inputCardList = Array.from(popupAddCard.querySelectorAll('.popup__input'));
+const btnAddCardSubmit = popupAddCard.querySelector('.popup__btn-save');
 
 // функция открытия любого попапа
 function openPopup (popup) {
@@ -40,6 +42,7 @@ buttonEdit.addEventListener('click', () => {
 })
 
 buttonAdd.addEventListener('click', () => {
+  toggleButtonState(inputCardList, btnAddCardSubmit, validationConfig.inactiveButtonClass);
   openPopup(popupAddCard);
 })
  
@@ -85,7 +88,7 @@ function addCard(name, link) {
 // фукция добавления исходного массива карточек на страницу
 function loadInitialCards(elements) {
   elements.reverse().forEach(({name, link}) => {
-    console.log(name, link);
+    // console.log(name, link);
     addCard(name, link);
   })
 }
@@ -121,6 +124,9 @@ function handleFormSubmitAddCard (evt) {
  
   addCard(name, link);
   formAddCard.reset();
+
+  toggleButtonState(inputCardList, btnAddCardSubmit, validationConfig.inactiveButtonClass);
+
   closePopup(popupAddCard);
 }
 
@@ -137,3 +143,8 @@ function handleFormSubmitEditCard (evt) {
 // он будет следить за событием “submit” - «отправка»
 popupEditForm.addEventListener('submit', handleFormSubmitEditCard);
 formAddCard.addEventListener('submit', handleFormSubmitAddCard);
+
+// вызываем функцию enableValidation в которую передаем validationConfig - объект, состоящий из свойств, 
+// значение которых - классы, по которым мы будем искать.
+// Нужны для того чтобы мы могли применить валидацию в любую разметку
+enableValidation(validationConfig);
