@@ -1,5 +1,4 @@
 
-// за состояние кнопки сабмита отвечает отдельная функция;
 // появление сообщения об ошибке в одну или две строки высотой не должно приводить к изменению
 // высоты модального окна. Если сообщение об ошибке от трёх строк высотой, то размер модального окна
 // увеличивается.
@@ -57,7 +56,7 @@ function hasInvalidInput(inputList) {
 /*если все инпуты валидны, функция возвращает фолс, если НЕвалиден хотябы один инпут в форме, 
 то возвращает тру. Метод some принимает на вход колбек функцию. 
 Параметром передаем элемент массива inputElement*/
-  return inputList.some((inputElement) => !inputElement.validity.valid)
+  return inputList.some((inputElement) => !inputElement.validity.valid);
 }
 
 
@@ -102,7 +101,7 @@ function enableValidation(validationConfig) {
   const formList =Array.from(document.querySelectorAll(validationConfig.formSelector));
 // проходимся по каждой форме, вызываем обработчик событий
   formList.forEach((formElement) => {
-    setEventListeners(formElement, validationConfig)
+    setEventListeners(formElement, validationConfig);
   })
 }
 

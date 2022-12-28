@@ -42,7 +42,7 @@ buttonEdit.addEventListener('click', () => {
 })
 
 buttonAdd.addEventListener('click', () => {
-  toggleButtonState(inputCardList, btnAddCardSubmit, validationConfig.inactiveButtonClass);
+  toggleButtonState(inputCardList, btnAddCardSubmit, validationConfig);
   openPopup(popupAddCard);
 })
  
@@ -125,7 +125,7 @@ function handleFormSubmitAddCard (evt) {
   addCard(name, link);
   formAddCard.reset();
 
-  toggleButtonState(inputCardList, btnAddCardSubmit, validationConfig.inactiveButtonClass);
+  // toggleButtonState(inputCardList, btnAddCardSubmit, validationConfig);
 
   closePopup(popupAddCard);
 }

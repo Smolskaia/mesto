@@ -3,7 +3,7 @@
   margin-bottom: 0;
   margin-right: 25px;
   margin-left: 22px;
-  width: 358px;
+  width: 100%;
   align-self: center;
   border: none;
   border-bottom: 1px solid rgba(0, 0, 0, 0.2);
@@ -24,7 +24,6 @@
 
 @media screen and (max-width: 680px) {
   .popup__input {
-    width: 238px;
     margin-right: 0;
     margin-left: 0;
   }
