@@ -6,7 +6,6 @@
 // Слушатель событий, закрывающий модальное окно по нажатию на Esc , добавляется при открытии модального
 // окна и удаляется при его закрытии.
 
-// в validate.js
 // объект, состоящий из свойств
 const validationConfig = {
   formSelector: '.popup__form',
@@ -58,7 +57,6 @@ function hasInvalidInput(inputList) {
 Параметром передаем элемент массива inputElement*/
   return inputList.some((inputElement) => !inputElement.validity.valid);
 }
-
 
 // функция чтобы установить активное/неактивное состояние кнопки
 // в параметры передаем список инпутов и конфиг

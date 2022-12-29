@@ -1,9 +1,10 @@
-
+const popupList = document.querySelectorAll('.popup');
+// попап для редактирования профия
 const popupEditProfile = document.querySelector('.popup_form_edit');
 const popupEditForm = popupEditProfile.querySelector('.popup__form');
 const inputName = popupEditForm.querySelector('.popup__input_text_name');
 const inputInfo = popupEditForm.querySelector('.popup__input_text_info'); 
-// const popup = document.querySelector('.popup');
+
 const popupEditClose = popupEditProfile.querySelector('.popup__btn-close');
 const profileName = document.querySelector('.profile__name');
 const profileInfo = document.querySelector('.profile__about');
@@ -13,6 +14,7 @@ const popupAddCard = document.querySelector('.popup_form_add');
 const formAddCard = popupAddCard.querySelector('.popup__form');
 const descriptionAddCard = popupAddCard.querySelector('.popup__input_text_name');
 const linkAddCard = popupAddCard.querySelector('.popup__input_text_info');
+const btnAddCardSubmit = popupAddCard.querySelector('.popup__btn-save');
 
 // попап для просмотра изображения
 const popupViewer = document.querySelector('.popup_form_viewer');
@@ -27,12 +29,13 @@ const buttonAdd = document.querySelector('.profile__btn-add');
 const buttonEdit = document.querySelector('.profile__btn-edit');
 const popupOpenImg = document.querySelectorAll('.element__img');
 
+// Массив инпутов
 const inputCardList = Array.from(popupAddCard.querySelectorAll('.popup__input'));
-const btnAddCardSubmit = popupAddCard.querySelector('.popup__btn-save');
 
 // функция открытия любого попапа
 function openPopup (popup) {
   popup.classList.add('popup_opened');
+  document.addEventListener('keydown', escapeHandler);
 }
 
 buttonEdit.addEventListener('click', () => {
@@ -107,14 +110,34 @@ function likeCard(like) {
 // функция закрывает окно попапа
 function closePopup(item) {
   item.classList.remove('popup_opened');
+  document.removeEventListener('keydown', escapeHandler);
 }
 
-popupCloseButtons.forEach(button => {
-  button.addEventListener('click', () => {
-    const popupParent = button.closest('.popup')
-    closePopup(popupParent)
+// Обработчик закрытия по нажатию на крестик
+// popupCloseButtons.forEach(button => {
+//   button.addEventListener('click', () => {
+//     const popupParent = button.closest('.popup')
+//     closePopup(popupParent)
+//   })
+// })
+
+// Обработчик закрытия по нажатию на крестик и на оверлей
+popupList.forEach((item) => {
+  item.addEventListener('click', (evt) => {
+    if (evt.target.classList.contains('popup_opened') ||
+    evt.target.classList.contains('popup__btn-close')) {
+      closePopup(item);
+    }
   })
-})
+})  
+
+// функция для закрытия попапа клавишей Esc
+function escapeHandler(evt) {
+  if (evt.key === 'Escape') {
+    const popup = document.querySelector('.popup_opened');
+    closePopup(popup);
+    }
+  }
 
 //Обработчик формы Добавления карточки
 function handleFormSubmitAddCard (evt) {
@@ -124,9 +147,7 @@ function handleFormSubmitAddCard (evt) {
  
   addCard(name, link);
   formAddCard.reset();
-
   // toggleButtonState(inputCardList, btnAddCardSubmit, validationConfig);
-
   closePopup(popupAddCard);
 }
 
@@ -135,6 +156,8 @@ function handleFormSubmitEditCard (evt) {
   evt.preventDefault();  
   profileName.textContent = inputName.value;;
   profileInfo.textContent = inputInfo.value;
+
+  popupEditForm.reset();
 
   closePopup(popupEditProfile);
 }
