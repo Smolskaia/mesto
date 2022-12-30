@@ -35,7 +35,7 @@ const inputCardList = Array.from(popupAddCard.querySelectorAll('.popup__input'))
 // функция открытия любого попапа
 function openPopup (popup) {
   popup.classList.add('popup_opened');
-  document.addEventListener('keydown', escapeHandler);
+  document.addEventListener('keydown', handleEscape);
 }
 
 buttonEdit.addEventListener('click', () => {
@@ -110,16 +110,8 @@ function likeCard(like) {
 // функция закрывает окно попапа
 function closePopup(item) {
   item.classList.remove('popup_opened');
-  document.removeEventListener('keydown', escapeHandler);
+  document.removeEventListener('keydown', handleEscape);
 }
-
-// Обработчик закрытия по нажатию на крестик
-// popupCloseButtons.forEach(button => {
-//   button.addEventListener('click', () => {
-//     const popupParent = button.closest('.popup')
-//     closePopup(popupParent)
-//   })
-// })
 
 // Обработчик закрытия по нажатию на крестик и на оверлей
 popupList.forEach((item) => {
@@ -132,7 +124,7 @@ popupList.forEach((item) => {
 })  
 
 // функция для закрытия попапа клавишей Esc
-function escapeHandler(evt) {
+function handleEscape(evt) {
   if (evt.key === 'Escape') {
     const popup = document.querySelector('.popup_opened');
     closePopup(popup);
@@ -147,7 +139,7 @@ function handleFormSubmitAddCard (evt) {
  
   addCard(name, link);
   formAddCard.reset();
-  // toggleButtonState(inputCardList, btnAddCardSubmit, validationConfig);
+
   closePopup(popupAddCard);
 }
 
@@ -166,8 +158,3 @@ function handleFormSubmitEditCard (evt) {
 // он будет следить за событием “submit” - «отправка»
 popupEditForm.addEventListener('submit', handleFormSubmitEditCard);
 formAddCard.addEventListener('submit', handleFormSubmitAddCard);
-
-// вызываем функцию enableValidation в которую передаем validationConfig - объект, состоящий из свойств, 
-// значение которых - классы, по которым мы будем искать.
-// Нужны для того чтобы мы могли применить валидацию в любую разметку
-enableValidation(validationConfig);
