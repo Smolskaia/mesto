@@ -1,3 +1,6 @@
+import { Card } from './Card.js';
+// import { FormValidator } from './FormValidator.js';
+
 const popupList = document.querySelectorAll('.popup');
 // попап для редактирования профия
 const popupEditProfile = document.querySelector('.popup_form_edit');
@@ -38,6 +41,12 @@ function openPopup (popup) {
   document.addEventListener('keydown', handleEscape);
 }
 
+// функция открытия попапа с картинкой
+export function openPopupImage(name, link) {
+  openPopup(popupViewer);
+  fillPopupViewerData(name, link)
+}
+
 buttonEdit.addEventListener('click', () => {
   inputName.value = profileName.textContent;
   inputInfo.value = profileInfo.textContent;
@@ -49,6 +58,7 @@ buttonAdd.addEventListener('click', () => {
   openPopup(popupAddCard);
 })
  
+
 //Заполнить данные: картинку и название карточки для попапа
 function fillPopupViewerData(name, link) {
   popupViewerImage.src = link;
@@ -59,53 +69,22 @@ function fillPopupViewerData(name, link) {
 // Находим контейнер в DOM, куда вставляем массив
 const cardsList = document.querySelector('.elements__list');
 // создаём элемент списка. Чтобы получить содержимое template, обращаемся к его свойству content
-const cardsTemplate = document.querySelector('#card-template').content;
+// const cardsTemplate = document.querySelector('#card-template').content;
 
-function createCard(name, link) {  
-  //кланируем содержимое тега template
-  const cardElement = cardsTemplate.querySelector('.element').cloneNode(true);
-  // наполняем содержимым
-  const cardLike = cardElement.querySelector('.element__like');
-  const cardDelete = cardElement.querySelector('.element__delete');
-  const cardImage = cardElement.querySelector('.element__img');
-  
-  cardImage.src = link;
-  cardImage.alt = name;
-  cardElement.querySelector('.element__title').textContent = name;
-  
-
-  cardLike.addEventListener('click', () => likeCard(cardLike));
-  cardDelete.addEventListener('click', () => deleteCard(cardDelete));
-  cardImage.addEventListener('click', () => {
-    openPopup(popupViewer);
-    fillPopupViewerData(name, link);
-  });
-
-  return cardElement;
+function createCard(item) {  
+  const card = new Card(item, '#card-template');
+  return card.generateCard();
 }
 
-function addCard(name, link) {
-  cardsList.prepend(createCard(name, link));
+// функция создания карточки перед всеми остальными карточками
+function addCard(item) {
+  cardsList.prepend(createCard(item));
 }
 
 // фукция добавления исходного массива карточек на страницу
-function loadInitialCards(elements) {
-  elements.reverse().forEach(({name, link}) => {
-    // console.log(name, link);
-    addCard(name, link);
-  })
-}
-
-loadInitialCards(initialCards);
-
-function deleteCard(element) {
-  element.closest('.element').remove();
-}
-
-// функция ставит лайк
-function likeCard(like) {
-  like.classList.toggle('element__like_active');
-}
+initialCards.forEach((item) => {
+  addCard(item);
+});
 
 // функция закрывает окно попапа
 function closePopup(item) {
@@ -134,12 +113,13 @@ function handleEscape(evt) {
 //Обработчик формы Добавления карточки
 function handleFormSubmitAddCard (evt) {
   evt.preventDefault();
-  const name = descriptionAddCard.value;
-  const link = linkAddCard.value;
+  const data = {
+   name: descriptionAddCard.value,
+   link: linkAddCard.value
+  }
  
-  addCard(name, link);
+  addCard(data);
   formAddCard.reset();
-
   closePopup(popupAddCard);
 }
 
