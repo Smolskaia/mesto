@@ -33,13 +33,14 @@
 // templateSelector - селектор шаблона
 
 // импортировать функцию открытия картинки
-import { openPopupImage } from './index.js';
+// import { openPopupImage } from './index.js';
 
 export class Card {
-  constructor(data, templateSelector) {
+  constructor(data, templateSelector, openPopupImage) {
     this._name = data.name;
     this._link = data.link;
     this._templateSelector = templateSelector;
+    this._openPopupImage = openPopupImage;
   }
 
 /* Чтобы получить нужную разметку, добавьте классу Card метод _getTemplate, который:
@@ -71,7 +72,7 @@ _setEventListeners() {
     this._deleteCard();
   });
   this._card.querySelector('.element__img').addEventListener('click', () => {
-    this._openImagePopup(this._name, this._link);
+    this._openPopupImage(this._name, this._link);
   });
 }
 

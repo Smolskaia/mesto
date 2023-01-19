@@ -42,7 +42,7 @@ function openPopup (popup) {
 }
 
 // функция открытия попапа с картинкой
-export function openPopupImage(name, link) {
+function openPopupImage(name, link) {
   openPopup(popupViewer);
   fillPopupViewerData(name, link)
 }
@@ -72,7 +72,7 @@ const cardsList = document.querySelector('.elements__list');
 // const cardsTemplate = document.querySelector('#card-template').content;
 
 function createCard(item) {  
-  const card = new Card(item, '#card-template');
+  const card = new Card(item, '#card-template', openPopupImage);
   return card.generateCard();
 }
 
