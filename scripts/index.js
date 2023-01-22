@@ -1,5 +1,8 @@
 import { Card } from './Card.js';
-// import { FormValidator } from './FormValidator.js';
+import { FormValidator } from './FormValidator.js';
+
+import { validationConfig } from './validationConfig.js'
+import { initialCards } from './initialCards.js';
 
 const popupList = document.querySelectorAll('.popup');
 // попап для редактирования профия
@@ -54,7 +57,7 @@ buttonEdit.addEventListener('click', () => {
 })
 
 buttonAdd.addEventListener('click', () => {
-  toggleButtonState(inputCardList, btnAddCardSubmit, validationConfig);
+  validationFormAddCard.disableSubmitButton();
   openPopup(popupAddCard);
 })
  
@@ -71,6 +74,7 @@ const cardsList = document.querySelector('.elements__list');
 // создаём элемент списка. Чтобы получить содержимое template, обращаемся к его свойству content
 // const cardsTemplate = document.querySelector('#card-template').content;
 
+// функция, которая создает новый экземпряр класса
 function createCard(item) {  
   const card = new Card(item, '#card-template', openPopupImage);
   return card.generateCard();
@@ -85,6 +89,14 @@ function addCard(item) {
 initialCards.forEach((item) => {
   addCard(item);
 });
+
+// создаем экземпляры класса FormValidator
+// для формы добавления карточки
+const validationFormAddCard = new FormValidator(validationConfig, formAddCard);
+validationFormAddCard.enableValidation();
+// для формы редаутирования профиля
+const validationFormEditCard = new FormValidator(validationConfig, popupEditForm);
+validationFormEditCard.enableValidation();
 
 // функция закрывает окно попапа
 function closePopup(item) {
