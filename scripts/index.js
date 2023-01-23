@@ -57,7 +57,7 @@ buttonEdit.addEventListener('click', () => {
 })
 
 buttonAdd.addEventListener('click', () => {
-  validationFormAddCard.disableSubmitButton();
+  validationFormAddCard.resetValidation();
   openPopup(popupAddCard);
 })
  

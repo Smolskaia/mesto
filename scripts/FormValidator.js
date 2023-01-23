@@ -29,7 +29,7 @@ export class FormValidator {
 
 
 // удаляем классы, стирая текс ошибки
-  _hideInputError(_formElement, inputElement, _validationConfig) {
+  _hideInputError(inputElement) {
     // находим спан
     const errorElement = this._formElement.querySelector(`.${inputElement.id}-error`);
     
@@ -43,7 +43,7 @@ export class FormValidator {
     
     if (inputElement.validity.valid) {
       // Если поле проходит валидацию, скроем ошибку
-      this._hideInputError(_formElement, inputElement, _validationConfig);
+      this._hideInputError(inputElement);
     } else {
       // Если поле не проходит валидацию, покажем ошибку
       this._showInputError(_formElement, inputElement, _validationConfig);
@@ -88,9 +88,21 @@ export class FormValidator {
     });
   }
 
-  disableSubmitButton() {
-    this._toggleButtonState()
+  //метод для очистки ошибок и управления кнопкой 
+  resetValidation() {
+    //управляем кнопкой
+    this._toggleButtonState();
+    //очищаем ошибки с инпутов
+    this._inputList.forEach((inputElement) => {
+      this._hideInputError(inputElement) 
+    });
+
   }
+
+  //метод для управления кнопкой
+  // disableSubmitButton() {
+  //   this._toggleButtonState()
+  // }
 
 // публичный метод enableValidation отвечает за включение валидации всех форм
   enableValidation() {

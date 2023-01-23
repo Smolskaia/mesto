@@ -30,20 +30,20 @@ _getTemplate() {
 /* Чтобы установить слушатель события, нужна стрелочная функция. 
 Только она позволит обратиться к _handleMessageClick через this.*/
 _setEventListeners() {
-  this._card.querySelector('.element__like').addEventListener('click', () => {
-    this._toggleLike();
-  });
-  this._card.querySelector('.element__delete').addEventListener('click', () => {
+  this._deleteButton.addEventListener('click', () => {
     this._deleteCard();
   });
-  this._card.querySelector('.element__img').addEventListener('click', () => {
+  this._likeButton.addEventListener('click', () => {
+    this._toggleLike();
+  });
+  this._cardImage.addEventListener('click', () => {
     this._openPopupImage(this._name, this._link);
   });
 }
 
 // метод переключения лайка
 _toggleLike() {
-  this._card.querySelector('.element__like').classList.toggle('element__like_active');
+  this._likeButton.classList.toggle('element__like_active');
 }
 
 // метод удаления карточки
@@ -58,13 +58,15 @@ _openImagePopup() {
 
 // Метод готовит карточку к публикации.
 generateCard() {
-  // Запишем разметку в приватное поле _card. 
-  // Так у других элементов появится доступ к ней.
+  // Запишем разметку в приватное поле _card. Так у других элементов появится доступ к ней.
   this._card = this._getTemplate();
-  
+  // Объявим классовые переменные
+  this._cardImage = this._card.querySelector('.element__img');
+  this._likeButton = this._card.querySelector('.element__like');
+  this._deleteButton = this._card.querySelector('.element__delete');
   // Добавим данные
-  this._card.querySelector('.element__img').alt = this._name;
-  this._card.querySelector('.element__img').src = this._link;
+  this._cardImage.alt = this._name;
+  this._cardImage.src = this._link;
   this._card.querySelector('.element__title').textContent = this._name;
   
   // добавим обработчики

@@ -2,7 +2,7 @@
 Учебный проект от [*Яндекс.Практикум*](https://practicum.yandex.ru/)
 
 # Описание проекта и функционал
-Проект создается в рамках 4 - 6 спринтов курса Веб-разработчик. 
+Проект создается в рамках 4 - 7 спринтов курса Веб-разработчик. 
 На данный момент страница позволяет:
 * Редактировать профиль
 * Добавлять картинки
@@ -33,3 +33,4 @@
 * [Чеклист 4го проекта](https://code.s3.yandex.net/web-developer/checklists-pdf/new-program/checklist-4.pdf)
 * [Чеклист 5го проекта](https://code.s3.yandex.net/web-developer/checklists-pdf/new-program/checklist-5.pdf)
 * [Чеклист 6го проекта](https://code.s3.yandex.net/web-developer/checklists-pdf/new-program/checklist-6.pdf)
+* [Чеклист 7го проекта](https://code.s3.yandex.net/web-developer/checklists-pdf/new-program/checklist-7.pdf)
