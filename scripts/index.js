@@ -77,6 +77,7 @@ const cardsList = document.querySelector('.elements__list');
 // функция, которая создает новый экземпряр класса
 function createCard(item) {  
   const card = new Card(item, '#card-template', openPopupImage);
+  // console.log('card =>', card);
   return card.generateCard();
 }
 
@@ -97,6 +98,9 @@ validationFormAddCard.enableValidation();
 // для формы редаутирования профиля
 const validationFormEditCard = new FormValidator(validationConfig, popupEditForm);
 validationFormEditCard.enableValidation();
+
+// console.log('validationFormAddCard =>', validationFormAddCard);
+// console.log('validationFormEditCard =>', validationFormEditCard);
 
 // функция закрывает окно попапа
 function closePopup(item) {

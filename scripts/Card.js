@@ -52,9 +52,9 @@ _deleteCard() {
 }
 
 // метод открытия попапа с картинкой
-_openImagePopup() {
-  openPopupImage(this._name, this._link);
-}
+// _openImagePopup() {
+//   openPopupImage(this._name, this._link);
+// }
 
 // Метод готовит карточку к публикации.
 generateCard() {

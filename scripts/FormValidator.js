@@ -16,13 +16,14 @@ export class FormValidator {
 
 
 //ищем спан, получаем id элемента span, добавляем ему класс ошибки, добавляем ему текст ошибки
-  _showInputError(_formElement, inputElement, _validationConfig) {
+  _showInputError(inputElement, errorMessage) {
+    // console.log('errorMessage =>', errorMessage)
     // находим спан
     const errorElement = this._formElement.querySelector(`.${inputElement.id}-error`);
     // добавляем ему класс, отвечающий за стили popup__input-error_active
     errorElement.classList.add(this._validationConfig.errorClass);
     //Установите validationMessage в качестве значения textContent для errorElement
-    errorElement.textContent = inputElement.validationMessage;
+    errorElement.textContent = errorMessage;
     //Добавьте errorElement класс inputErrorClass.
     inputElement.classList.add(this._validationConfig.inputErrorClass);
   }
@@ -39,14 +40,14 @@ export class FormValidator {
   }
 
 //Проверяем, есть ли у полей input свойство validity
-  _checkInputValidity(_formElement, inputElement, _validationConfig) {
+  _checkInputValidity(inputElement) {
     
     if (inputElement.validity.valid) {
       // Если поле проходит валидацию, скроем ошибку
       this._hideInputError(inputElement);
     } else {
       // Если поле не проходит валидацию, покажем ошибку
-      this._showInputError(_formElement, inputElement, _validationConfig);
+      this._showInputError(inputElement, inputElement.validationMessage);
     }
   }
 
@@ -63,27 +64,29 @@ export class FormValidator {
 // список инпутов нужен для проверки каждого инпута на валидность
   _toggleButtonState() {
     if (this._hasInvalidInput()) {
+      // console.log('hasInvalidInput!');
       this._buttonElement.classList.add(this._validationConfig.inactiveButtonClass);
       this._buttonElement.disabled = true;
     } else {
+      // console.log('NO hasInvalidInput!');
       this._buttonElement.classList.remove(this._validationConfig.inactiveButtonClass);
       this._buttonElement.disabled = false;
     }
   }
 
 //метод передаем форму и конфиг
-  _setEventListeners(_formElement, _validationConfig) {
+  _setEventListeners() {
     
     // вызываем функцию toggleButtonState чтобы при обновлении страницы обновлялось состояние кнопки
-    this._toggleButtonState(this._inputList, this._buttonElement, _validationConfig);
+    this._toggleButtonState(this._inputList, this._buttonElement);
 
     // у каждой формы и навешиваем обработчики инпут
     this._inputList.forEach((inputElement) => {
       inputElement.addEventListener('input', () => {
         // вызываем функцию checkInputValidity, которая проверяет инпут на валидность
-        this._checkInputValidity(_formElement, inputElement, _validationConfig);
+        this._checkInputValidity(inputElement);
         // вызываем функцию чтобы установить активное/неактивное состояние кнопки
-        this._toggleButtonState(this._inputList, this._buttonElement, _validationConfig);
+        this._toggleButtonState(this._inputList, this._buttonElement);
       });
     });
   }
