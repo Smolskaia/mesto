@@ -4,6 +4,10 @@ import { FormValidator } from './FormValidator.js';
 import { validationConfig } from './validationConfig.js'
 import { initialCards } from './initialCards.js';
 
+import { Section } from './Section.js';
+import { PopupWithImage } from './PopupWithImage.js';
+
+
 const popupList = document.querySelectorAll('.popup');
 // попап для редактирования профия
 const popupEditProfile = document.querySelector('.popup_form_edit');
@@ -38,17 +42,38 @@ const popupOpenImg = document.querySelectorAll('.element__img');
 // Массив инпутов
 const inputCardList = Array.from(popupAddCard.querySelectorAll('.popup__input'));
 
-// функция открытия любого попапа
-function openPopup (popup) {
-  popup.classList.add('popup_opened');
-  document.addEventListener('keydown', handleEscape);
-}
+
+// Создаем экземпляр класса PopupWithImage:
+const popupImage = new PopupWithImage('.popup_form_viewer');
+// Вещаем на попап открытия картинки обработчик событий:
+popupImage.setEventListeners();
 
 // функция открытия попапа с картинкой
 function openPopupImage(name, link) {
-  openPopup(popupViewer);
-  fillPopupViewerData(name, link)
+  popupImage.open(name, link);
 }
+
+
+ 
+
+// Находим контейнер в DOM, куда вставляем массив
+const cardsList = document.querySelector('.elements__list');
+// создаём элемент списка. Чтобы получить содержимое template, обращаемся к его свойству content
+// const cardsTemplate = document.querySelector('#card-template').content;
+
+
+const defaultCardList = new Section({ 
+  items: initialCards, 
+  renderer: (item) => {
+    const card = new Card(item, '#card-template', openPopupImage);
+    const cardElement = card.generateCard();
+    // Вставим разметку на страницу,
+    // используя метод addItem класса Section
+    defaultCardList.addItem(cardElement)
+  },
+}, cardsList);
+
+defaultCardList.renderItems();
 
 buttonEdit.addEventListener('click', () => {
   inputName.value = profileName.textContent;
@@ -60,36 +85,7 @@ buttonAdd.addEventListener('click', () => {
   validationFormAddCard.resetValidation();
   openPopup(popupAddCard);
 })
- 
 
-//Заполнить данные: картинку и название карточки для попапа
-function fillPopupViewerData(name, link) {
-  popupViewerImage.src = link;
-  popupViewerImage.alt = name;
-  popupViewerDescription.textContent = name;
-}
-
-// Находим контейнер в DOM, куда вставляем массив
-const cardsList = document.querySelector('.elements__list');
-// создаём элемент списка. Чтобы получить содержимое template, обращаемся к его свойству content
-// const cardsTemplate = document.querySelector('#card-template').content;
-
-// функция, которая создает новый экземпряр класса
-function createCard(item) {  
-  const card = new Card(item, '#card-template', openPopupImage);
-  // console.log('card =>', card);
-  return card.generateCard();
-}
-
-// функция создания карточки перед всеми остальными карточками
-function addCard(item) {
-  cardsList.prepend(createCard(item));
-}
-
-// фукция добавления исходного массива карточек на страницу
-initialCards.forEach((item) => {
-  addCard(item);
-});
 
 // создаем экземпляры класса FormValidator
 // для формы добавления карточки
@@ -102,29 +98,6 @@ validationFormEditCard.enableValidation();
 // console.log('validationFormAddCard =>', validationFormAddCard);
 // console.log('validationFormEditCard =>', validationFormEditCard);
 
-// функция закрывает окно попапа
-function closePopup(item) {
-  item.classList.remove('popup_opened');
-  document.removeEventListener('keydown', handleEscape);
-}
-
-// Обработчик закрытия по нажатию на крестик и на оверлей
-popupList.forEach((item) => {
-  item.addEventListener('click', (evt) => {
-    if (evt.target.classList.contains('popup_opened') ||
-    evt.target.classList.contains('popup__btn-close')) {
-      closePopup(item);
-    }
-  })
-})  
-
-// функция для закрытия попапа клавишей Esc
-function handleEscape(evt) {
-  if (evt.key === 'Escape') {
-    const popup = document.querySelector('.popup_opened');
-    closePopup(popup);
-    }
-  }
 
 //Обработчик формы Добавления карточки
 function handleFormSubmitAddCard (evt) {
