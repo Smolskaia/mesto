@@ -1,79 +1,57 @@
-/* ## Создайте класс `PopupWithForm`
-
-Создайте класс `PopupWithForm`, который наследует от `Popup`. Этот класс:
-
+/* класс `PopupWithForm` наследует от `Popup`. 
+Этот класс:
 - Кроме селектора попапа принимает в конструктор колбэк сабмита формы.
 - Содержит приватный метод `_getInputValues`, который собирает данные 
 всех полей формы.
-- Перезаписывает родительский метод `_setEventListeners`. 
-Метод `_setEventListeners` класса `PopupWithForm` должен 
-не только добавлять обработчик клика иконке закрытия, 
-но и добавлять обработчик сабмита формы.
-- Перезаписывает родительский метод `close`,
- так как при закрытии попапа форма должна ещё и сбрасываться.
+ */
 
-`PopupWithForm`
+import { Popup } from "./Popup.js";
 
-Для каждого попапа создавайте свой экземпляр класса `PopupWithForm`. */
+export class PopupWithForm extends Popup {
+  constructor(popupSelector, handleFormSubmit) {
+    super(popupSelector);
+    this._handleFormSubmit = handleFormSubmit;
+    this._form = this._popup.querySelector('.popup__form');
+    // console.log(this._form);
+  }
 
-//класс создаёт элемент формы
-// class SubmitForm {
-//   constructor({ selector, handleFormSubmit }) {
-//     this._selector = selector;
-//     this._handleFormSubmit = handleFormSubmit;
-//   }
-// } 
-// //метод _getElement, который клонирует и возвращает разметку формы
-// _getElement() {
-//   const formElement = document
-//   .querySelector(this._selector)
-//   .content
-//   .querySelector('.form')
-//   .cloneNode(true);
+// метод собирает массив всех полей в форме, обходит их и добавляет их значения в объект. 
+//Ключами этого объекта будут атрибуты name каждого поля:
+  _getInputValues() {
+    // достаём все элементы полей
+    this._inputList = Array.from(this._popup.querySelectorAll('.popup__input'));
+    // создаем пустой объект
+    this._formValues = {};
+    // добавляем в этот объект значения всех полей
+    this._inputList.forEach(input => {
+      this._formValues[input.name] = input.value;
+    });
+    // возвращаем объект значений
+    return this._formValues;
+  } 
 
-// return formElement;
-// } 
+  setEventListeners() {
+    // добавляем обработчик клика иконке закрытия
+    super.setEventListeners();
+    // добавляем обработчик сабмита формы
+    this._form.addEventListener('submit', (evt) => {
+      // отменим стандартное поведение
+      evt.preventDefault();
+      // добавим вызов функции _handleFormSubmit
+      // передадим ей объект — результат работы _getInputValues
+      this._handleFormSubmit(this._getInputValues());
+      // console.log(this._getInputValues);
+    })
+  }
 
-// _setEventListeners() {
-//   // при сабмите формы
-//   this._element.addEventListener('submit', (evt) => {
-//     // отменим стандартное поведение
-//     evt.preventDefault();
+  close() {
+    super.close();
+    // сброс формы при закрытии попапа
+    this._form.reset();
+  }
 
-//     // добавим вызов функции _handleFormSubmit
-//     // передадим ей объект — результат работы _getInputValues
-//     this._handleFormSubmit(this._getInputValues());
+}
 
-//     // и сбросим её поля
-//     this._element.reset();
-//   })
-// } 
-
-// generate() {
-//   this._element = this._getElement(); // создаём элемент
-//   this._setEventListeners(); // добавляем обработчики
-
-//     return this._element; // возвращаем наружу
-// } 
-
-
-// //метод собирает массив всех полей в форме, обходит их и добавляет их значения в объект. 
-// //Ключами этого объекта будут атрибуты name каждого поля:
-// _getInputValues() {
-//   // достаём все элементы полей
-//   this._inputList = this._element.querySelectorAll('.form__input');
-
-//   // создаём пустой объект
-//   this._formValues = {};
-
-//   // добавляем в этот объект значения всех полей
-//   this._inputList.forEach(input => {
-//     this._formValues[input.name] = input.value;
-//   });
-
-//   // возвращаем объект значений
-//   return this._formValues;
-// } 
 
 // // ./pages/index.js
 
