@@ -2,7 +2,7 @@
 Учебный проект от [*Яндекс.Практикум*](https://practicum.yandex.ru/)
 
 # Описание проекта и функционал
-Проект создается в рамках 4 - 7 спринтов курса Веб-разработчик. 
+Проект создается в рамках обучения на курсе Веб-разработчик. 
 На данный момент страница позволяет:
 * Редактировать профиль
 * Добавлять картинки
@@ -16,11 +16,12 @@
 # Стек технологий:
 * HTML5;
 * CSS3:
-* Flexbox;
-* Grid Layot;
+* Flexbox, Grid Layot;
 * БЭМ;
 * Медиазапросы;
 * JavaScript;
+* ООП
+* Webpack
 
 **[Ссылка на проект](https://smolskaia.github.io/mesto/)**
 
@@ -34,3 +35,4 @@
 * [Чеклист 5го проекта](https://code.s3.yandex.net/web-developer/checklists-pdf/new-program/checklist-5.pdf)
 * [Чеклист 6го проекта](https://code.s3.yandex.net/web-developer/checklists-pdf/new-program/checklist-6.pdf)
 * [Чеклист 7го проекта](https://code.s3.yandex.net/web-developer/checklists-pdf/new-program/checklist-7.pdf)
+* [Чеклист 8го проекта](https://code.s3.yandex.net/web-developer/checklists-pdf/new-program/checklist-8.pdf)
