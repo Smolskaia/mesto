@@ -37,7 +37,7 @@ export class Popup {
   // Модальное окно также закрывается при клике на затемнённую 
   // область вокруг формы.
   setEventListeners() {
-    this._popup.addEventListener('click', (evt) => {
+    this._popup.addEventListener('mousedown', (evt) => {
       // закрытие по клику на оверлей
       if (evt.target.classList.contains('popup_opened') ||
       // закрытие по клику на крестик

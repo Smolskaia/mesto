@@ -1,79 +1,81 @@
 import "./index.css";
 
-import { Card } from '../components/Card.js';
-import { FormValidator } from '../components/FormValidator.js';
+import { Card } from "../components/Card.js";
+import { FormValidator } from "../components/FormValidator.js";
 
-import { validationConfig } from '../utils/validationConfig.js'
-import { initialCards } from '../utils/initialCards.js';
+import { validationConfig } from "../utils/validationConfig.js";
+import { initialCards } from "../utils/initialCards.js";
 
-import { Section } from '../components/Section.js';
+import { Section } from "../components/Section.js";
 
-import { PopupWithImage } from '../components/PopupWithImage.js';
-import { PopupWithForm } from '../components/PopupWithForm.js';
-import { UserInfo } from '../components/UserInfo.js';
+import { PopupWithImage } from "../components/PopupWithImage.js";
+import { PopupWithForm } from "../components/PopupWithForm.js";
+import { UserInfo } from "../components/UserInfo.js";
 
-// попап для редактирования профия
-const popupEditProfile = document.querySelector('.popup_form_edit');
-const popupEditForm = popupEditProfile.querySelector('.popup__form');
-const inputName = popupEditForm.querySelector('.popup__input_text_name');
-const inputInfo = popupEditForm.querySelector('.popup__input_text_info'); 
+// форма попапа для редактирования профия
+const popupEditForm = document.forms["form-edit"];
 
-// попап для добавления фото
-const popupAddCard = document.querySelector('.popup_form_add');
-const formAddCard = popupAddCard.querySelector('.popup__form');
+// форма попапа для добавления фото
+const formAddCard = document.forms["form-add-card"];
 
 // Кнопки открытия попапов
-const buttonAdd = document.querySelector('.profile__btn-add');
-const buttonEdit = document.querySelector('.profile__btn-edit');
+const buttonAdd = document.querySelector(".profile__btn-add");
+const buttonEdit = document.querySelector(".profile__btn-edit");
 
 // Находим контейнер в DOM, куда вставляем массив
-const cardsList = document.querySelector('.elements__list');
+const cardsList = document.querySelector(".elements__list");
 
+//функция создает карточку и возвращает ее
+function createCard(item) {
+  const card = new Card(item, "#card-template", openPopupImage);
+  const cardElement = card.generateCard();
+  return cardElement;
+}
 
-const defaultCardList = new Section({ 
-  items: initialCards, 
-  renderer: (item) => {
-    const card = new Card(item, '#card-template', openPopupImage);
-    const cardElement = card.generateCard();
-    // Вставим разметку на страницу,
-    // используя метод addItem класса Section
-    defaultCardList.addItem(cardElement)
+const defaultCardList = new Section(
+  {
+    items: initialCards,
+    renderer: (item) => {
+      const cardElement = createCard(item);
+      // Вставим разметку на страницу,
+      // используя метод addItem класса Section
+      defaultCardList.addItem(cardElement);
+    },
   },
-}, cardsList);
+  cardsList
+);
 
 defaultCardList.renderItems();
 
 //Для каждого попапа создаем свой экземпляр класса PopupWithForm
-const popupEdit = new PopupWithForm('.popup_form_edit', handleEditFormSubmit);
+const popupEdit = new PopupWithForm(".popup_form_edit", handleEditFormSubmit);
 popupEdit.setEventListeners();
 
-const popupAdd = new PopupWithForm('.popup_form_add', handleAddFormSubmit);
+const popupAdd = new PopupWithForm(".popup_form_add", handleAddFormSubmit);
 popupAdd.setEventListeners();
 
- 
 // коллбек формы добавления карточки
 function handleAddFormSubmit(item) {
-  const card = new Card(item, '#card-template', openPopupImage);
-  const cardElement = card.generateCard();
+  const cardElement = createCard(item);
   // Вставим разметку на страницу,
   // используя метод addItem класса Section
   defaultCardList.addItem(cardElement);
   popupAdd.close();
 }
 
- //коллбек формы редактирования профиля
+//коллбек формы редактирования профиля
 function handleEditFormSubmit(inputData) {
   user.setUserInfo(inputData);
   popupEdit.close();
 }
 
 const user = new UserInfo({
-  profileNameSelector: '.profile__name', 
-  profileInfoSelector: '.profile__about',
+  profileNameSelector: ".profile__name",
+  profileInfoSelector: ".profile__about",
 });
 
 // Создаем экземпляр класса PopupWithImage:
-const popupImage = new PopupWithImage('.popup_form_viewer');
+const popupImage = new PopupWithImage(".popup_form_viewer");
 // Вещаем на попап открытия картинки обработчик событий:
 popupImage.setEventListeners();
 
@@ -87,21 +89,19 @@ function openPopupImage(name, link) {
 const validationFormAddCard = new FormValidator(validationConfig, formAddCard);
 validationFormAddCard.enableValidation();
 // для формы редаутирования профиля
-const validationFormEditCard = new FormValidator(validationConfig, popupEditForm);
+const validationFormEditCard = new FormValidator(
+  validationConfig,
+  popupEditForm
+);
 validationFormEditCard.enableValidation();
 
-
-buttonEdit.addEventListener('click', () => {
-  const { name, info } = user.getUserInfo();
-  inputName.value = name;
-  inputInfo.value = info;
-  
+buttonEdit.addEventListener("click", () => {
   validationFormEditCard.resetValidation();
   popupEdit.open();
-    
-})
+  popupEdit.setInputValues(user.getUserInfo());
+});
 
-buttonAdd.addEventListener('click', () => {
+buttonAdd.addEventListener("click", () => {
   validationFormAddCard.resetValidation();
   popupAdd.open();
-})
+});
