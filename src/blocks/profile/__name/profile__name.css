@@ -8,6 +8,7 @@
   white-space: nowrap;
   overflow: hidden;
   max-width: 300px;
+  color: #fff;
 }
 
 @media screen and (max-width: 680px) {
