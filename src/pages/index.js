@@ -12,6 +12,9 @@ import { PopupWithImage } from "../components/PopupWithImage.js";
 import { PopupWithForm } from "../components/PopupWithForm.js";
 import { UserInfo } from "../components/UserInfo.js";
 
+import { apiConfig } from "../utils/apiConfig.js";
+import { Api } from "../components/Api.js";
+
 // форма попапа для редактирования профия
 const popupEditForm = document.forms["form-edit"];
 
@@ -25,12 +28,24 @@ const buttonEdit = document.querySelector(".profile__btn-edit");
 // Находим контейнер в DOM, куда вставляем массив
 const cardsList = document.querySelector(".elements__list");
 
+const api = new Api(apiConfig); 
+
 //функция создает карточку и возвращает ее
 function createCard(item) {
   const card = new Card(item, "#card-template", openPopupImage);
   const cardElement = card.generateCard();
   return cardElement;
 }
+
+//вывод исходного массива с сервера
+api.getInitialCards()
+.then(res => {
+  console.log('res =>', res)
+  defaultCardList.renderItems(res);
+})
+.catch((err) => {
+  console.log(err); // выведем ошибку в консоль
+}); 
 
 const defaultCardList = new Section(
   {
@@ -45,7 +60,7 @@ const defaultCardList = new Section(
   cardsList
 );
 
-defaultCardList.renderItems();
+// defaultCardList.renderItems();
 
 //Для каждого попапа создаем свой экземпляр класса PopupWithForm
 const popupEdit = new PopupWithForm(".popup_form_edit", handleEditFormSubmit);
