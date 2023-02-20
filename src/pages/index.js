@@ -28,6 +28,7 @@ const buttonEdit = document.querySelector(".profile__btn-edit");
 // Находим контейнер в DOM, куда вставляем массив
 const cardsList = document.querySelector(".elements__list");
 
+// экземпрляр класса Api
 const api = new Api(apiConfig); 
 
 //функция создает карточку и возвращает ее
@@ -70,12 +71,21 @@ const popupAdd = new PopupWithForm(".popup_form_add", handleAddFormSubmit);
 popupAdd.setEventListeners();
 
 // коллбек формы добавления карточки
-function handleAddFormSubmit(item) {
-  const cardElement = createCard(item);
+function handleAddFormSubmit(cardElement) {
+  api.addNewCard(cardElement)
+  .then(res => {
+    console.log('addNewCard =>', res);
+    defaultCardList.addItem(createCard(res));
+    popupAdd.close();
+  })
+  .catch((err) => {
+    console.log(err); // выведем ошибку в консоль
+  }); 
+  // const cardElement = createCard(item);
   // Вставим разметку на страницу,
   // используя метод addItem класса Section
-  defaultCardList.addItem(cardElement);
-  popupAdd.close();
+  // defaultCardList.addItem(cardElement);
+  // popupAdd.close();
 }
 
 //коллбек формы редактирования профиля

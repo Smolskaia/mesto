@@ -13,7 +13,7 @@ _checkResponse(res) {
   return Promise.reject(`Ошибка: ${res.status}`)
 }
 
-  // загрузка карточек с сервера
+  // загрузка карточек с сервера, метод GET по умолчанию
   getInitialCards() {
     return fetch(`${this._baseUrl}/cards`, {
       headers: this._headers
@@ -21,32 +21,83 @@ _checkResponse(res) {
     .then(res => this._checkResponse(res));
   }
 
-  // другие методы работы с API
+  // загрузка данных пользователя с сервера, метод GET по умолчанию
+  getUserInfo() {
+    return fetch(`${this._baseUrl}/users/me`, {
+      headers: this._headers
+    })
+    .then(res => this._checkResponse(res));
+  }
 
+  // редактирование профиля методом PATCH
+  setUserInfo(obj) {
+    return fetch(`${this._baseUrl}/users/me`, {
+      method: 'PATCH',
+      headers: this._headers,
+      body: JSON.stringify({
+        name: obj.name,
+        about: obj.about
+      })
+    })
+    .then(res => this._checkResponse(res));
+  }
+  
+  // добавление новой карточки, POST-запрос
+  addNewCard(cardElement) {
+    return fetch(`${this._baseUrl}/cards`, {
+      method: 'POST',
+      headers: this._headers,
+      body: JSON.stringify({
+        name: cardElement.name,
+        link: cardElement.link
+      })
+    })
+    .then(res => this._checkResponse(res));
+  }
+  
+  // поставить лайк, PUT-запрос
+  putLike(cardId) {
+    return fetch(`${this._baseUrl}/cards/${cardId}/likes`, {
+      method: 'PUT',
+      headers: this._headers
+    })
+    .then(res => this._checkResponse(res));
+  }
 
+  // убрать лайк, DELETE-запрос
+  removeLike(cardId) {
+    return fetch(`${this._baseUrl}/cards/${cardId}/likes`, {
+      method: 'DELETE',
+      headers: this._headers
+    })
+    .then(res => this._checkResponse(res));
+  }
 
+  // удаление карточки, DELETE-запрос
+  deleteCard(cardId) {
+    return fetch(`${this._baseUrl}/cards/${cardId}`, {
+      method: 'DELETE',
+      headers: this._headers
+    })
+    .then(res => this._checkResponse(res));
+  }
+
+  // обновление аватара пользователя, PATCH-запрос
+  updateAvatar(avatarLink) {
+    return fetch(`${this._baseUrl}/users/me/avatar`, {
+      method: 'PATCH',
+      headers: this._headers,
+      body: JSON.stringify({
+        avatar : avatarLink
+      })
+    })
+    .then(res => this._checkResponse(res));
+  }
 
 }
 
 // // загрузка карточек с сервера
 // export const getInitialCards = () => {
-//   return fetch('https://mesto.nomoreparties.co/v1/cohort-60/cards', {
-//   headers: {
-//     authorization: '75431e8b-c938-443f-8b20-ed39d4658e75'
-//   }
-// })
-// // .then(res => res.ok ? res.json() : Promise.reject())
-// .then((res) => { 
-//   if (res.ok) {
-//     return res.json();
-//   }
-//   // если ошибка, отклоняем промис
-//   return Promise.reject(`Ошибка: ${res.status}`)
-// })
-
-// }
-
-// export const deleteCard = () => {
 //   return fetch('https://mesto.nomoreparties.co/v1/cohort-60/cards', {
 //   headers: {
 //     authorization: '75431e8b-c938-443f-8b20-ed39d4658e75'
