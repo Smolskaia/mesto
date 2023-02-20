@@ -29,7 +29,7 @@ export class UserInfo {
   // принимает новые данные пользователя и добавляет их на страницу
   setUserInfo(inputData) {
     this._name.textContent = inputData.name;
-    this._info.textContent = inputData.info;
+    this._info.textContent = inputData.about;
     // console.log(inputData);
   }
 }

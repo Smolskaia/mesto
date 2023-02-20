@@ -36,7 +36,7 @@ _checkResponse(res) {
       headers: this._headers,
       body: JSON.stringify({
         name: obj.name,
-        about: obj.about
+        about: obj.info
       })
     })
     .then(res => this._checkResponse(res));

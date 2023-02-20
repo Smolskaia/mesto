@@ -38,15 +38,37 @@ function createCard(item) {
   return cardElement;
 }
 
+// function handleDeleteClick() {
+//   api.deleteCard(card.getId)
+//   .then(() => {
+//     card.deleteCard()
+//   })
+// }
+
 //вывод исходного массива с сервера
 api.getInitialCards()
 .then(res => {
-  console.log('res =>', res)
+  // console.log('res =>', res)
   defaultCardList.renderItems(res);
 })
 .catch((err) => {
   console.log(err); // выведем ошибку в консоль
 }); 
+
+//вывод данных полльзователя с сервера
+api.getUserInfo()
+.then(res => {
+  // console.log('res =>', res)
+  user.setUserInfo(res);
+})
+.catch((err) => {
+  console.log(err); // выведем ошибку в консоль
+}); 
+
+// нужно вызвать промис олл, чтобы сперва загрузилась информация о пользователе(с id), а затем массив карточек с сервера.
+//
+// Promise.all([api.getUserInfo(), api.getInitialCards()])
+
 
 const defaultCardList = new Section(
   {
@@ -72,26 +94,36 @@ popupAdd.setEventListeners();
 
 // коллбек формы добавления карточки
 function handleAddFormSubmit(cardElement) {
+  popupAdd.setButtonText('Сохранение...');
   api.addNewCard(cardElement)
   .then(res => {
-    console.log('addNewCard =>', res);
+    // console.log('addNewCard =>', res);
     defaultCardList.addItem(createCard(res));
     popupAdd.close();
   })
   .catch((err) => {
     console.log(err); // выведем ошибку в консоль
-  }); 
-  // const cardElement = createCard(item);
-  // Вставим разметку на страницу,
-  // используя метод addItem класса Section
-  // defaultCardList.addItem(cardElement);
-  // popupAdd.close();
+  })
+  .finally(() => {
+    popupAdd.setButtonText('Создать');
+  })
 }
 
 //коллбек формы редактирования профиля
 function handleEditFormSubmit(inputData) {
-  user.setUserInfo(inputData);
-  popupEdit.close();
+  popupEdit.setButtonText('Сохранение...');
+  api.setUserInfo(inputData)
+  .then(res => {
+    console.log('setUserInfo =>', res);
+    user.setUserInfo(res);
+    popupEdit.close();
+  })
+  .catch((err) => {
+    console.log(err);
+  })
+  .finally(() => {
+    popupEdit.setButtonText('Сохранить');
+  })
 }
 
 const user = new UserInfo({
