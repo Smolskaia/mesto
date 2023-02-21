@@ -43,6 +43,10 @@ _setEventListeners() {
   });
 }
 
+// getID() {
+//   return this._id
+// }
+
 // метод переключения лайка
 _toggleLike() {
   this._likeButton.classList.toggle('element__like_active');

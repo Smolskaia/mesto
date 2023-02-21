@@ -12,9 +12,10 @@
 данные пользователя и добавляет их на страницу. */
 
 export class UserInfo {
-  constructor({profileNameSelector, profileInfoSelector}) {
+  constructor({profileNameSelector, profileInfoSelector, profileAvatarSelector}) {
     this._name = document.querySelector(profileNameSelector);
     this._info = document.querySelector(profileInfoSelector);
+    this._avatar = document.querySelector(profileAvatarSelector);
   }
 
   // возвращает объект с данными пользователя
@@ -22,14 +23,21 @@ export class UserInfo {
     const userData = {
       name: this._name.textContent,
       info: this._info.textContent,
+      avatar: this._avatar.src,
     }
     return userData;
   }
+
+// возвращает id пользователя
+  // getUserId() {
+  //   return this._id;
+  // }
 
   // принимает новые данные пользователя и добавляет их на страницу
   setUserInfo(inputData) {
     this._name.textContent = inputData.name;
     this._info.textContent = inputData.about;
+    this._avatar.src = inputData.avatar;
     // console.log(inputData);
   }
 }

@@ -21,9 +21,16 @@ const popupEditForm = document.forms["form-edit"];
 // форма попапа для добавления фото
 const formAddCard = document.forms["form-add-card"];
 
+//форма папапа обновления аватара
+const formSetAvatar = document.forms["form-update-avatar"];
+
+//аватар
+const profileAvatar = document.querySelector('.profile__avatar');
+
 // Кнопки открытия попапов
 const buttonAdd = document.querySelector(".profile__btn-add");
 const buttonEdit = document.querySelector(".profile__btn-edit");
+const buttonSetAvatar = document.querySelector(".profile__btn-edit-avatar")
 
 // Находим контейнер в DOM, куда вставляем массив
 const cardsList = document.querySelector(".elements__list");
@@ -92,6 +99,9 @@ popupEdit.setEventListeners();
 const popupAdd = new PopupWithForm(".popup_form_add", handleAddFormSubmit);
 popupAdd.setEventListeners();
 
+const popupSetAvatar = new  PopupWithForm(".popup_form_update-avatar", handleSetAvatarFormSubmit);
+popupSetAvatar.setEventListeners();
+
 // коллбек формы добавления карточки
 function handleAddFormSubmit(cardElement) {
   popupAdd.setButtonText('Сохранение...');
@@ -126,9 +136,28 @@ function handleEditFormSubmit(inputData) {
   })
 }
 
+//коллбек формы обновления аватара
+function handleSetAvatarFormSubmit(avatarLink) {
+popupSetAvatar.setButtonText('Сохранение...');
+  api.setAvatar(avatarLink.link)
+  .then(res => {
+    console.log('setAvatar =>', res);
+    user.setUserInfo(res);
+    popupSetAvatar.close();
+  })
+  .catch((err) => {
+    console.log(err);
+  })
+  .finally(() => {
+    popupSetAvatar.setButtonText('Сохранить');
+  })
+}
+  
+
 const user = new UserInfo({
   profileNameSelector: ".profile__name",
   profileInfoSelector: ".profile__about",
+  profileAvatarSelector: ".profile__avatar"
 });
 
 // Создаем экземпляр класса PopupWithImage:
@@ -152,6 +181,10 @@ const validationFormEditCard = new FormValidator(
 );
 validationFormEditCard.enableValidation();
 
+// для формы обновления аватара
+const validationFormSetAvatar = new FormValidator(validationConfig, formSetAvatar);
+validationFormSetAvatar.enableValidation();
+
 buttonEdit.addEventListener("click", () => {
   validationFormEditCard.resetValidation();
   popupEdit.open();
@@ -161,4 +194,9 @@ buttonEdit.addEventListener("click", () => {
 buttonAdd.addEventListener("click", () => {
   validationFormAddCard.resetValidation();
   popupAdd.open();
+});
+
+buttonSetAvatar.addEventListener("click", () => {
+  validationFormSetAvatar.resetValidation();
+  popupSetAvatar.open();
 });
