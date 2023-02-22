@@ -1,13 +1,21 @@
 // Передаем данные в класс Card в виде объекта data, а в самом классе присваиваем полям нужные свойства.
 // templateSelector - селектор шаблона
 export class Card {
-  constructor(data, templateSelector, openPopupImage) {
+  constructor(data, templateSelector, openPopupImage, 
+    handleCardDelete, handleLikeClick, userId) {
     this._name = data.name;
     this._link = data.link;
-    this._id = data.id;
+    this._cardId = data._id;
+    this._ownerId = data.owner._id;
     this._likes = data.likes;
+    this._likeCounter = data.likes.length;
+
+    this._userId = userId;
+
     this._templateSelector = templateSelector;
     this._openPopupImage = openPopupImage;
+    this._handleCardDelete = handleCardDelete;
+    this._handleLikeClick = handleLikeClick;
   }
 
 /* Чтобы получить нужную разметку, добавьте классу Card метод _getTemplate, который:
@@ -33,7 +41,7 @@ _getTemplate() {
 Только она позволит обратиться к _handleMessageClick через this.*/
 _setEventListeners() {
   this._deleteButton.addEventListener('click', () => {
-    this._deleteCard();
+    this._handleCardDelete(this._id, this._card);
   });
   this._likeButton.addEventListener('click', () => {
     this._toggleLike();
@@ -43,9 +51,6 @@ _setEventListeners() {
   });
 }
 
-// getID() {
-//   return this._id
-// }
 
 // метод переключения лайка
 _toggleLike() {
@@ -57,19 +62,23 @@ _deleteCard() {
   this._card.remove();
 }
 
-// метод открытия попапа с картинкой
-// _openImagePopup() {
-//   openPopupImage(this._name, this._link);
-// }
-
 // Метод готовит карточку к публикации.
 generateCard() {
   // Запишем разметку в приватное поле _card. Так у других элементов появится доступ к ней.
   this._card = this._getTemplate();
+  // this._isliked = this._likes.some(like => like._id === userId);
+  
   // Объявим классовые переменные
   this._cardImage = this._card.querySelector('.element__img');
   this._likeButton = this._card.querySelector('.element__like');
   this._deleteButton = this._card.querySelector('.element__delete');
+  
+  // если текущий пользователь не является владельцем карточки - удалить корзину
+  if (this._ownerId !== this._UserId) {
+    this._deleteButton.remove();
+  }
+
+
   // Добавим данные
   this._cardImage.alt = this._name;
   this._cardImage.src = this._link;

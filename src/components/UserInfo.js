@@ -29,15 +29,15 @@ export class UserInfo {
   }
 
 // возвращает id пользователя
-  // getUserId() {
-  //   return this._id;
-  // }
+  getUserId() {
+    return this._id;
+  }
 
   // принимает новые данные пользователя и добавляет их на страницу
   setUserInfo(inputData) {
     this._name.textContent = inputData.name;
     this._info.textContent = inputData.about;
     this._avatar.src = inputData.avatar;
-    // console.log(inputData);
+    // console.log('setUserInfo =>', inputData);
   }
 }
