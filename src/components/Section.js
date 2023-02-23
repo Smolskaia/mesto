@@ -21,7 +21,7 @@ export class Section {
   // Вызывает для каждого элемента массива метод addItem,
   //добавляя исходный массив карточек на страницую.
   renderItems(items) {
-    items.forEach((item) => {
+    items.reverse().forEach((item) => {
       this._renderer(item);
     });
   }

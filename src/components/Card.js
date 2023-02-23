@@ -2,7 +2,7 @@
 // templateSelector - селектор шаблона
 export class Card {
   constructor(data, templateSelector, openPopupImage, 
-    handleCardDelete, handleLikeClick, userId) {
+    handleCardDelete,/*handleLikeClick,*/ userId) {
     this._name = data.name;
     this._link = data.link;
     this._cardId = data._id;
@@ -11,11 +11,11 @@ export class Card {
     this._likeCounter = data.likes.length;
 
     this._userId = userId;
-
+    // console.log('my id =>', userId)
     this._templateSelector = templateSelector;
     this._openPopupImage = openPopupImage;
     this._handleCardDelete = handleCardDelete;
-    this._handleLikeClick = handleLikeClick;
+    // this._handleLikeClick = handleLikeClick;
   }
 
 /* Чтобы получить нужную разметку, добавьте классу Card метод _getTemplate, который:
@@ -41,7 +41,7 @@ _getTemplate() {
 Только она позволит обратиться к _handleMessageClick через this.*/
 _setEventListeners() {
   this._deleteButton.addEventListener('click', () => {
-    this._handleCardDelete(this._id, this._card);
+    this._handleCardDelete(this._cardId, this._card);
   });
   this._likeButton.addEventListener('click', () => {
     this._toggleLike();
@@ -57,11 +57,6 @@ _toggleLike() {
   this._likeButton.classList.toggle('element__like_active');
 }
 
-// метод удаления карточки
-_deleteCard() {
-  this._card.remove();
-}
-
 // Метод готовит карточку к публикации.
 generateCard() {
   // Запишем разметку в приватное поле _card. Так у других элементов появится доступ к ней.
@@ -74,10 +69,9 @@ generateCard() {
   this._deleteButton = this._card.querySelector('.element__delete');
   
   // если текущий пользователь не является владельцем карточки - удалить корзину
-  if (this._ownerId !== this._UserId) {
+  if (this._ownerId !== this._userId) {
     this._deleteButton.remove();
   }
-
 
   // Добавим данные
   this._cardImage.alt = this._name;

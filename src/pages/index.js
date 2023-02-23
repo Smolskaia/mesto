@@ -40,13 +40,13 @@ const api = new Api(apiConfig);
 let userId;
 
 //функция создает карточку и возвращает ее
-function createCard(item, userId) {
+function createCard(item) {
   const card = new Card(
     item, 
     "#card-template", 
     openPopupImage, 
     handleCardDelete,
-    /*handleLikeClick*/ 
+    /*handleLikeClick,*/
     userId);
   const cardElement = card.generateCard();
   return cardElement;
@@ -68,7 +68,8 @@ popupDelCardConfirm.setEventListeners();
 function handleConfirmFormSubmit(cardId, card) {
   popupDelCardConfirm.setButtonText('Удаление...');
   api.deleteCard(cardId)
-    .then(res => {
+    .then((res) => {
+      // console.log('cardId =>', cardId)
       card.remove(res);
     })
     .catch((err) => {
@@ -88,14 +89,14 @@ Promise.all([api.getUserInfo(), api.getInitialCards()])
     console.log('userData =>', userData)
     user.setUserInfo(userData); //установка данных пользователя на странице - имя, инфо, аватар
     userId = userData._id;
-    console.log('my id =>', userId)
+    // console.log('my id =>', userId)
     defaultCardList.renderItems(cards); //вывод массива данных с сервера
   })
   .catch((err) => {
     console.log(err);
   }); 
 
-console.log('my id =>', userId)
+// console.log('my id =>', userId)
 
 const defaultCardList = new Section(
   {

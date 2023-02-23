@@ -1,11 +1,11 @@
 import { Popup } from "./Popup.js";
 
 export class PopupDeleteCardConfirmation extends Popup {
-  constructor(popupSelector, handleFormSubmit) {
+  constructor(popupSelector, handleConfirmFormSubmit) {
     super(popupSelector);
     this._form = this._popup.querySelector(".popup__form");
     this._button = this._popup.querySelector(".popup__btn-save");
-    this._handleFormSubmit = handleFormSubmit;
+    this._handleConfirmFormSubmit = handleConfirmFormSubmit;
   }
 
   
@@ -17,8 +17,8 @@ export class PopupDeleteCardConfirmation extends Popup {
     this._form.addEventListener("submit", (evt) => {
       // отменим стандартное поведение
       evt.preventDefault();
-      // добавим вызов функции _handleFormSubmit
-      this._handleFormSubmit(this._cardId, this._card);
+      // добавим вызов функции _handleConfirmFormSubmit
+      this._handleConfirmFormSubmit(this._cardId, this._card);
       super.close();
     });
   }
