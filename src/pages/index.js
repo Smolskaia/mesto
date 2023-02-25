@@ -46,10 +46,32 @@ function createCard(item) {
     "#card-template", 
     openPopupImage, 
     handleCardDelete,
-    /*handleLikeClick,*/
+    handleLikeClick,
     userId);
   const cardElement = card.generateCard();
   return cardElement;
+}
+
+//обработчик клика на лайк
+function handleLikeClick(cardId, card) {
+  if(card.isLiked) {
+    api.removeLike(cardId)
+    .then((res) => {
+      card.setLikes(res.likes);
+    })
+    .catch((err) => {
+      console.log(err); 
+    })
+  } else {
+    api.putLike(cardId)
+    .then((res) => {
+      card.setLikes(res.likes);
+    })
+    .catch((err) => {
+      console.log(err);
+  })
+  }
+  
 }
 
 // функция открывает попап подтверждения удаления карточки
