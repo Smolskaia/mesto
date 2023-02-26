@@ -32,7 +32,7 @@ const buttonEdit = document.querySelector(".profile__btn-edit");
 const buttonSetAvatar = document.querySelector(".profile__btn-edit-avatar")
 
 // Находим контейнер в DOM, куда вставляем массив
-const cardsList = document.querySelector(".elements__list");
+const cardsContainer = document.querySelector(".elements__list");
 
 // экземпрляр класса Api
 const api = new Api(apiConfig); 
@@ -58,17 +58,13 @@ function handleLikeClick(card) {
   if (card.isLike) {
       api.removeLike(card._cardId)
           .then((res) => {
-              card.numberOfLikes(res.likes);
-              card.statusLike();
-              card.toggleLike();
+              card.setLikes(res.likes);
           })
           .catch((err) => console.log(err));
   } else {
       api.putLike(card._cardId)
           .then((res) => {
-              card.numberOfLikes(res.likes);
-              card.statusLike();
-              card.toggleLike();
+              card.setLikes(res.likes);
           })
           .catch((err) => console.log(err))
   }
@@ -87,12 +83,12 @@ const popupDelCardConfirm = new PopupDeleteCardConfirmation(
 popupDelCardConfirm.setEventListeners();
 
 // коллбек формы подтверждения удаления карточки
-function handleConfirmFormSubmit(cardId, card) {
+function handleConfirmFormSubmit(card) {
   popupDelCardConfirm.setButtonText('Удаление...');
-  api.deleteCard(cardId)
+  api.deleteCard(card._cardId)
     .then((res) => {
       // console.log('card =>', card)
-      card.remove(res);
+      card.removeCard(res);
     })
     .catch((err) => {
       console.log(err); // выведем ошибку в консоль
@@ -116,8 +112,6 @@ Promise.all([api.getUserInfo(), api.getInitialCards()])
     console.log(err);
   }); 
 
-// console.log('my id =>', userId)
-
 const defaultCardList = new Section(
   {
     items: initialCards,
@@ -129,7 +123,7 @@ const defaultCardList = new Section(
       defaultCardList.addItem(cardElement);
     },
   },
-  cardsList
+  cardsContainer
 );
 
 
@@ -148,7 +142,6 @@ function handleAddFormSubmit(cardElement) {
   popupAdd.setButtonText('Сохранение...');
   api.addNewCard(cardElement)
   .then(res => {
-    console.log('addNewCard =>', res);
     defaultCardList.addItem(createCard(res));
     popupAdd.close();
   })

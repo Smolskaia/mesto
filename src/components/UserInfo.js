@@ -28,11 +28,6 @@ export class UserInfo {
     return userData;
   }
 
-// возвращает id пользователя
-  getUserId() {
-    return this._id;
-  }
-
   // принимает новые данные пользователя и добавляет их на страницу
   setUserInfo(inputData) {
     this._name.textContent = inputData.name;

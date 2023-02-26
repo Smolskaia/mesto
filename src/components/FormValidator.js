@@ -78,7 +78,7 @@ export class FormValidator {
   _setEventListeners() {
     
     // вызываем функцию toggleButtonState чтобы при обновлении страницы обновлялось состояние кнопки
-    this._toggleButtonState(this._inputList, this._buttonElement);
+    this._toggleButtonState();
 
     // у каждой формы и навешиваем обработчики инпут
     this._inputList.forEach((inputElement) => {
@@ -86,7 +86,7 @@ export class FormValidator {
         // вызываем функцию checkInputValidity, которая проверяет инпут на валидность
         this._checkInputValidity(inputElement);
         // вызываем функцию чтобы установить активное/неактивное состояние кнопки
-        this._toggleButtonState(this._inputList, this._buttonElement);
+        this._toggleButtonState();
       });
     });
   }
