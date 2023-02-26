@@ -53,16 +53,17 @@ function createCard(item) {
 }
 
 //обработчик клика на лайк
-function handleLikeClick(card) {
+function handleLikeClick(card, cardId) {
   // console.log('card =>', card)
+  // console.log('card id =>', cardId)
   if (card.isLike) {
-      api.removeLike(card._cardId)
+      api.removeLike(cardId)
           .then((res) => {
               card.setLikes(res.likes);
           })
           .catch((err) => console.log(err));
   } else {
-      api.putLike(card._cardId)
+      api.putLike(cardId)
           .then((res) => {
               card.setLikes(res.likes);
           })
@@ -83,9 +84,9 @@ const popupDelCardConfirm = new PopupDeleteCardConfirmation(
 popupDelCardConfirm.setEventListeners();
 
 // коллбек формы подтверждения удаления карточки
-function handleConfirmFormSubmit(card) {
+function handleConfirmFormSubmit(card, cardId) {
   popupDelCardConfirm.setButtonText('Удаление...');
-  api.deleteCard(card._cardId)
+  api.deleteCard(cardId)
     .then((res) => {
       // console.log('card =>', card)
       card.removeCard(res);
@@ -158,7 +159,7 @@ function handleEditFormSubmit(inputData) {
   popupEdit.setButtonText('Сохранение...');
   api.setUserInfo(inputData)
   .then(res => {
-    console.log('setUserInfo =>', res);
+    // console.log('setUserInfo =>', res);
     user.setUserInfo(res);
     popupEdit.close();
   })

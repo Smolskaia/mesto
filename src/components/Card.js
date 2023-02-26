@@ -47,10 +47,10 @@ export class Card {
 Только она позволит обратиться к _handleMessageClick через this.*/
   _setEventListeners() {
     this._deleteButton.addEventListener("click", () => {
-      this._handleCardDelete(this);
+      this._handleCardDelete(this, this._cardId);
     });
     this._likeButton.addEventListener("click", () => {
-      this._handleLikeClick(this);
+      this._handleLikeClick(this, this._cardId);
       // console.log(this._isLike);
     });
     this._cardImage.addEventListener("click", () => {
