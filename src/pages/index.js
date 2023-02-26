@@ -54,7 +54,7 @@ function createCard(item) {
 
 //обработчик клика на лайк
 function handleLikeClick(card) {
-  console.log('card =>', card)
+  // console.log('card =>', card)
   if (card.isLike) {
       api.removeLike(card._cardId)
           .then((res) => {
