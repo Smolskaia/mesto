@@ -53,25 +53,25 @@ function createCard(item) {
 }
 
 //обработчик клика на лайк
-function handleLikeClick(cardId, card) {
-  if(card.isLiked) {
-    api.removeLike(cardId)
-    .then((res) => {
-      card.setLikes(res.likes);
-    })
-    .catch((err) => {
-      console.log(err); 
-    })
+function handleLikeClick(card) {
+  console.log('card =>', card)
+  if (card.isLike) {
+      api.removeLike(card._cardId)
+          .then((res) => {
+              card.numberOfLikes(res.likes);
+              card.statusLike();
+              card.toggleLike();
+          })
+          .catch((err) => console.log(err));
   } else {
-    api.putLike(cardId)
-    .then((res) => {
-      card.setLikes(res.likes);
-    })
-    .catch((err) => {
-      console.log(err);
-  })
+      api.putLike(card._cardId)
+          .then((res) => {
+              card.numberOfLikes(res.likes);
+              card.statusLike();
+              card.toggleLike();
+          })
+          .catch((err) => console.log(err))
   }
-  
 }
 
 // функция открывает попап подтверждения удаления карточки
@@ -91,7 +91,7 @@ function handleConfirmFormSubmit(cardId, card) {
   popupDelCardConfirm.setButtonText('Удаление...');
   api.deleteCard(cardId)
     .then((res) => {
-      // console.log('cardId =>', cardId)
+      // console.log('card =>', card)
       card.remove(res);
     })
     .catch((err) => {
@@ -102,13 +102,11 @@ function handleConfirmFormSubmit(cardId, card) {
   })
 }
 
-
-
 // вызов Promise.all, чтобы сперва загрузилась информация о пользователе(с id), а затем массив карточек с сервера.
 Promise.all([api.getUserInfo(), api.getInitialCards()])
   .then(([userData, cards])=> {
-    console.log('cards =>', cards)
-    console.log('userData =>', userData)
+    // console.log('cards =>', cards)
+    // console.log('userData =>', userData)
     user.setUserInfo(userData); //установка данных пользователя на странице - имя, инфо, аватар
     userId = userData._id;
     // console.log('my id =>', userId)
