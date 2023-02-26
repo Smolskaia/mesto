@@ -13,6 +13,7 @@ export class PopupWithForm extends Popup {
     this._handleFormSubmit = handleFormSubmit;
     this._form = this._popup.querySelector(".popup__form");
     this._inputList = Array.from(this._popup.querySelectorAll(".popup__input"));
+    this._button = this._form.querySelector(".popup__btn-save");
   }
 
   // метод собирает массив всех полей в форме, обходит их и добавляет их значения в объект.
@@ -26,6 +27,11 @@ export class PopupWithForm extends Popup {
     });
     // возвращаем объект значений
     return this._formValues;
+  }
+
+  // метод меняет текст на кнопке
+  setButtonText(text) {
+    this._button.textContent = text;
   }
 
   // метод вставляет данные в инпуты

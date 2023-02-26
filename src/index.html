@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="author" content="Анна Смольская">
     <title>Mesto</title>
-    <!-- <script async src="./scripts/index.js"></script> -->
     <!-- <link rel="stylesheet" href="./pages/index.css"> -->
   </head>
 
@@ -17,8 +16,14 @@
         </header>
 
         <main class="content">
+
           <section class="profile">
-            <img class="profile__avatar" src="<%=require('./images/profile-avatar.png')%>" alt="Аватар профиля">
+
+            <div class="profile__wrapper-avatar">
+              <img class="profile__avatar" src="<%=require('./images/profile-avatar.png')%>" alt="Аватар профиля">
+              <button class="profile__btn-edit-avatar" type="button"></button>
+            </div>
+            
             <div class="profile__info">
               <h1 class="profile__name">Жак-Ив Кусто</h1>
               <button class="profile__btn-edit" type="button" title="Редактировать профиль" aria-label="Редактировать профиль"></button>
@@ -82,19 +87,63 @@
         </div>
       </div>
 
+      <div class="popup popup_delete-my-card_confirmation">
+        <div class="popup__container">
+          <button type="button" class="popup__btn-close"></button>
+          <h2 class="popup__title popup__title_type_delete-confirmation">Вы уверены?</h2>
+          <form name="form-delete-confirmation" class="popup__form" novalidate>
+            <button name="submitForm" type="submit" class="popup__btn-save">Да</button>
+          </form>
+        </div>
+      </div>
 
+      <div class="popup popup_form_update-avatar">
+        <div class="popup__container">
+          <button type="button" class="popup__btn-close"></button>
+          <h2 class="popup__title">Обновить аватар</h2>
+          <form name="form-update-avatar" class="popup__form" novalidate>
+            <!-- <label class="popup__label"> -->
+              <input name="link" id="url-avatar-image" type="url" placeholder="Ссылка на новый аватар" class="popup__input popup__input_text_info" required>
+              <span class="url-avatar-image-error popup__input-error"></span>
+            <!-- </label> -->
+            <button name="submitForm" type="submit" class="popup__btn-save">Сохранить</button>
+          </form>
+        </div>
+      </div>
+
+
+<!-- Моя карточка. Шаблон -->
     <template id="card-template">
       <div class="element">
         <img class="element__img" src="#" alt="Изображение, загруженное пользователем">
         <div class="element__group">
           <h2 class="element__title">Заголовок</h2>
           <button type="button" class="element__delete"></button>
-          <button type="button" class="element__like"></button>
+          <div class="element__like-section">
+            <button type="button" class="element__like"></button>
+            <span class="element__like-counter">1</span>
+          </div>
         </div>
       </div>
     </template>
+
+<!-- Чужая карточка. Шаблон -->
+    <template id="card-template">
+      <div class="element">
+        <img class="element__img" src="#" alt="Изображение, загруженное пользователем">
+        <div class="element__group">
+          <h2 class="element__title">Заголовок</h2>
+          <div class="element__like-section">
+            <button type="button" class="element__like"></button>
+            <span class="element__likes-counter">1</span>
+          </div>
+        </div>
+      </div>
+    </template>
+
     
     <!-- <script type="module" src="./pages/index.js"></script> -->
+    <!-- <script async src="./components/Api.js"></script> -->
     
   </body>
 </html>
