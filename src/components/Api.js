@@ -96,24 +96,5 @@ _checkResponse(res) {
 
 }
 
-// // загрузка карточек с сервера
-// export const getInitialCards = () => {
-//   return fetch('https://mesto.nomoreparties.co/v1/cohort-60/cards', {
-//   headers: {
-//     authorization: '75431e8b-c938-443f-8b20-ed39d4658e75'
-//   }
-// })
-// // .then(res => res.ok ? res.json() : Promise.reject())
-// .then((res) => { 
-//   if (res.ok) {
-//     return res.json();
-//   }
-//   // если ошибка, отклоняем промис
-//   return Promise.reject(`Ошибка: ${res.status}`)
-// })
-
-// }
-
-
 
 

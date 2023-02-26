@@ -52,21 +52,10 @@ _setEventListeners() {
   });
 }
 
-
 // проверка - есть ли лайк текущего пользователя
 get isLike() {
   return this._isLike;
 }
-
-// переключение лайка
-// _toggleLike() {
-//   // this._likeButton.classList.toggle('element__like_active');
-//   if(this.isLiked()) {
-//     this._likeButton.classList.add('element__like_active');
-//     } else {
-//     this._likeButton.classList.remove('element__like_active');
-//     }
-//   }
 
  // метод
  // новый массив перезаписывает предыдущий
@@ -83,7 +72,6 @@ statusLike() {
 toggleLike() {
   this._likeButton.classList.toggle('element__like_active');
 }
-
 
 // Метод готовит карточку к публикации.
 generateCard() {
